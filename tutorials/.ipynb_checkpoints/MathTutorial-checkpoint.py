@@ -6,6 +6,7 @@ Created on Fri Sep 24 11:00:55 2021
 @author: ptbowen
 """
 import worx.MathObjects as math
+
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import cm
@@ -143,7 +144,7 @@ v1=np.array([1,1,0]/sqrt(2))
 v1p=np.matmul(R_Matrix,v1)
 print(v1p)
 
-# Let's do the same in TensorWorx.  Given a vector space (a list of basis elements) we can promote a numpy matrix to a tensor, and then
+# Let's do the same in GoatWorx.  Given a vector space (a list of basis elements) we can promote a numpy matrix to a tensor, and then
 # take the dot product with a vector to rotate it.  Note that the vector or the tensor can be a subset of the vector space and rotation still works just fine.
 vec_space=[xhat,yhat,zhat]
 R_Tensor=math.MatrixToTensor(R_Matrix,vec_space)

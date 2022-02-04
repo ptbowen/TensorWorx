@@ -9,15 +9,16 @@ import worx.ElectromagneticObjects as emag
 import worx.MathObjects as math
 import worx.PlotTools as PlotTools
 import worx.Geometries as geom
-
 import numpy as np
 from numpy.lib.scimath import sqrt
 from mayavi import mlab
+
 
 pi=np.pi
 c=2.998e8
 (xhat,yhat,zhat)=math.CreateEuclideanBasis()
 vec_space=[xhat,yhat,zhat]
+
 
 # Operating frequency and beam definition
 f0=10.2e9

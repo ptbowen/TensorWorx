@@ -56,9 +56,12 @@ dip1=emag.Dipole(xhat*0)
 alpha0=(18e-3)**3           # polarizability amplitude
 Q=40                        # Quality factor
 m=np.linspace(0,1,100)      # Lorentzian modulation parameter 
-alpha=(lambda m: (alpha0*Q)*np.sin(m*pi)*np.exp(-1j*m*pi))
-dip1.TuningFunction_m=alpha
+alpha_m=(lambda f,m: (alpha0*Q)*np.sin(m*pi)*np.exp(-1j*m*pi))
+alpha_e=(lambda f,m: 0)
+dip1.TuningFunction_m=alpha_m
+dip1.TuningFunction_e=alpha_e
 dip1.nu_m=xhat
+dip1.nu_e=yhat
 
 # Dipole array design
 z_pos=np.arange(pitch/2,(N+1/2)*pitch,pitch)
