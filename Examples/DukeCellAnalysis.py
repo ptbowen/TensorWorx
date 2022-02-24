@@ -12,6 +12,7 @@ import worx.HFSS_IO as IO
 import worx.PlotTools as PlotTools
 
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from numpy.lib.scimath import sqrt
 import scipy.interpolate
@@ -256,7 +257,10 @@ PlotTools.MayaviAxes(10,-coordmax,coordmax,-coordmax,coordmax,0,coordmax)
 
 #%%
 
-
+data=pd.read_csv('../HFSS/DirectivitySlice_DukeCell.csv').to_numpy()
+f_hfss=data[:,0]*1e9
+phi_hfss=data[:,2]
+Dir_dB_hfss=data[:,-1]
 # Far field plotting
 directivity=HS.FarField.directivity
 k=HS.FarField.k
@@ -266,12 +270,16 @@ theta_grid=pi/2*np.ones(np.shape(phi_grid))
 Dir_dB=10*np.log10(np.real(directivity(k(theta_grid,phi_grid)))+1e-16) 
 plt.close(1)
 plt.figure(1)
-plt.plot(phi_grid*180/pi,np.squeeze(Dir_dB),label='TensorWorx, phi=0  plane')    
+plt.plot(phi_grid*180/pi,np.squeeze(Dir_dB),label='TensorWorx, phi=0  plane') 
+plt.plot(phi_hfss,np.squeeze(Dir_dB_hfss),label='HFSS, phi=0  plane') 
 plt.ylim(-15,15)
 plt.grid()
 plt.ylabel('Directivity')
 plt.xlabel('Theta [deg]')
+plt.legend()
 
-
-
+print('Peak Directivity = '+'%2.2f dBi' % np.max(Dir_dB))
+print('Radiated Power = '+'%2.1f%%' % (HS.FarField.Prad*100))
+print('Accepted Power = '+'%2.1f%%' % ((1-np.abs(WG.S21)**2-np.abs(WG.S11)**2)*100))
+print('Radiation Efficiency = '+'%2.1f%%' % (HS.FarField.Prad/(1-np.abs(WG.S21)**2-np.abs(WG.S11)**2)*100))
 
